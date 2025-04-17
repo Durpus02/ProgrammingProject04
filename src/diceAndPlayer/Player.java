@@ -1,5 +1,5 @@
 package diceAndPlayer;
 
 public class Player {
-	// TODO
+	// aleks test
 }
