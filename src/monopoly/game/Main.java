@@ -1,4 +1,4 @@
-package game;
+package monopoly.game;
 
 public class Main {
 	// TODO

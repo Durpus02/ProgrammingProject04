@@ -1,4 +1,4 @@
-package decks;
+package monopoly.decks;
 
 public enum ChanceCard {
     ADVANCE_TO_BOARDWALK,

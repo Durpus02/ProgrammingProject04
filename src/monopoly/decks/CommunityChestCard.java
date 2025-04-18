@@ -1,4 +1,4 @@
-package decks;
+package monopoly.decks;
 
 public enum CommunityChestCard {
     ADVANCE_TO_GO,
