@@ -1,4 +1,4 @@
-package data;
+package monopoly.data;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;

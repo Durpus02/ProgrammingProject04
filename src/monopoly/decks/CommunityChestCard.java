@@ -1,0 +1,20 @@
+package monopoly.decks;
+
+public enum CommunityChestCard {
+    ADVANCE_TO_GO,
+    BANK_ERROR,
+    DOCTOR_FEES,
+    SALE_OF_STOCK,
+    GET_OUT_OF_JAIL_FREE,
+    GO_TO_JAIL,
+    HOLIDAY_FUND,
+    INCOME_TAX_FUND,
+    BIRTHDAY,
+    LIFE_INSURANCE,
+    HOSPITAL_FEES,
+    SCHOOL_FEES,
+    CONSULTANCY_FEE,
+    STREET_REPAIR,
+    BEAUTY_CONTEST,
+    INHERITANCE
+}
