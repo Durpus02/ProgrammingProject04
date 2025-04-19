@@ -41,7 +41,7 @@ public class ChanceCards {
 	public Card drawChance() {
 		if (cardsChance.size() == 0) {
 			cardsChance.addAll(discardChance);
-			Collections.shuffle(cardsChance);
+			shuffleChance();
 			discardChance.clear();
 		}
 
