@@ -9,6 +9,7 @@ public class ChanceCards {
 	// test commit
 	List<Card> cardsChance = new ArrayList<>();
 	List<Card> discardChance = new ArrayList<>();
+	List<Card> handChance = new ArrayList<>();
 	int currentCard;
 	
 	ChanceCards(){
@@ -41,17 +42,39 @@ public class ChanceCards {
 		if (cardsChance.size() == 0) {
 			cardsChance.addAll(discardChance);
 			Collections.shuffle(cardsChance);
+			discardChance.clear();
 		}
+
 		Card draw = cardsChance.remove(currentCard--);
-		return draw;
+
+		if (draw.getName().contains("Get Out of Jail Free")) {
+			addToHandChance(draw);
+			return draw;
+		}
+		else {
+			return draw;
+		}
 	}
 	
 	public void discardPileChance(Card card) {
-		discardChance.add(card);
+		if (card != null) {
+			discardChance.add(card);
+		}
 	}
 	
+	public void addToHandChance(Card card){
+		if (card != null) {
+			handChance.add(card);
+		}
+	}
+
+	public void removeFromHandChance(Card card){
+		handChance.remove(card);
+	}
 	
-	
+	public List<Card> getHandChance(){
+		return new ArrayList<>(handChance);
+	}
 }
 
 
