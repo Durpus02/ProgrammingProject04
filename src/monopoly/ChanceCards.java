@@ -47,13 +47,11 @@ public class ChanceCards {
 
 		Card draw = cardsChance.remove(currentCard--);
 
-		if (draw.getName().contains("Get Out of Jail Free")) {
+		if (draw.getID() == 15) {
 			addToHandChance(draw);
-			return draw;
 		}
-		else {
-			return draw;
-		}
+		
+		return draw;
 	}
 	
 	public void discardPileChance(Card card) {
