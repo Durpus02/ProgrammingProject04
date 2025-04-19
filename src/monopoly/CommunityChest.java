@@ -9,6 +9,7 @@ public class CommunityChest {
 	// test commitment.
 	List<Card> cardsCC = new ArrayList<>();
 	List<Card> discardCC = new ArrayList<>(); 
+	List<Card> handCC = new ArrayList<>();
 	int currentCard;
 
 	public CommunityChest() {
@@ -40,18 +41,38 @@ public class CommunityChest {
 	public Card drawCC() {
 		if (cardsCC.size() == 0) {
 			cardsCC.addAll(discardCC);
-			Collections.shuffle(cardsCC);
+			shuffleCC();
+			discardCC.clear();
 		}
+
 		Card draw = cardsCC.remove(currentCard--);
-		return draw;
+
+		if (draw.getName().contains("Get Out of Jail Free")) {
+			addToHandCC(draw);
+			return draw;
+		}
+		else {
+			return draw;
+		}
 	}
 	
 	public void discardPileCC(Card card){
-		discardCC.add(card);
+		if (card != null) {
+			discardCC.add(card);
+		}
 	}
 	
-	
-	
-	
+	public void addToHandCC(Card card){
+		if (card != null) {
+			handCC.add(card);
+		}
+	}
 
+	public void removeFromHandCC(Card card){
+		handCC.remove(card);
+	}
+	
+	public List<Card> getHandCC(){
+		return new ArrayList<>(handCC);
+	}
 }
