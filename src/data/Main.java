@@ -43,7 +43,7 @@ public class Main {
 		for (int i = 1; i <= TESTS; ++i, n_turns *= 10) {
 			ledger.swap(i); // swap what 'CD' to store
 			// setup and run game
-			Monopoly game = new Monopoly(ledger, numPlayers);
+			Monopoly game = Monopoly.create(ledger, numPlayers);
 			game.addPlayer(strat);
 			game.setTurns(n_turns);
 			game.startGame();
@@ -59,7 +59,7 @@ public class Main {
 		for (int i = 1; i <= TESTS; ++i, n_turns *= 10) {
 			ledger.swap(i); // swap what 'CD' to store
 			// setup and run game
-			Monopoly game = new Monopoly(ledger, numPlayers);
+			Monopoly game = Monopoly.create(ledger, numPlayers);
 			game.addPlayer(strat);
 			game.setTurns(n_turns);
 			game.startGame();

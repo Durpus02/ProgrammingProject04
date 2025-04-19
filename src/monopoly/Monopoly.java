@@ -1,5 +1,7 @@
 package monopoly;
 
+import java.util.Random;
+
 import data.LandingLedger;
 
 /**
@@ -20,6 +22,7 @@ import data.LandingLedger;
  * @author Valor Goff so far
  */
 public class Monopoly {
+	Monopoly instance;
 	// tools
 	private Dice dice;
 	private ChanceCards chanceCards;
@@ -29,24 +32,24 @@ public class Monopoly {
 	private TempPlayer[] players;
 	private int turns;
 
-	// TODO: replace with actual player class
-	// Temporary
-	private class TempPlayer {
-		char strategy;
-
-		public TempPlayer(char strat) {
-			this.strategy = strat;
-		}
-	}
-
 	/**
 	 * Sets up the initial rules and tools of the game. Ledger implementation is
 	 * unique to the simulation project.
 	 * 
+	 * This is the public "constructor" using a factory design pattern so the
+	 * objects created can have its own pointer.
+	 * 
 	 * @param ledger     The LandingLedger that the game will write to.
 	 * @param numPlayers The number of players that will be playing.
 	 */
-	public Monopoly(LandingLedger ledger, int numPlayers) {
+	public static Monopoly create(LandingLedger ledger, int numPlayers) {
+		Monopoly game = new Monopoly(ledger, numPlayers);
+		game.instance = game;
+		return game;
+	}
+
+	// the actual constructor
+	private Monopoly(LandingLedger ledger, int numPlayers) {
 		// tools
 		dice = new Dice();
 		chanceCards = new ChanceCards();
@@ -77,7 +80,7 @@ public class Monopoly {
 				System.out.println("Players full! Didn't add player.");
 				return;
 			}
-			players[slot] = new TempPlayer(strategy);
+			players[slot] = new TempPlayer(instance, strategy);
 			System.out.println("A created");
 		}
 		case 'B' -> {
@@ -86,7 +89,7 @@ public class Monopoly {
 				System.out.println("Players full! Didn't add player.");
 				return;
 			}
-			players[slot] = new TempPlayer(strategy);
+			players[slot] = new TempPlayer(instance, strategy);
 			System.out.println("B created");
 		}
 		default -> {
@@ -149,9 +152,41 @@ public class Monopoly {
 			System.out.println("Playing Turn " + turn + ", player " + (currPlayer + 1));
 
 			// TODO: Add playTurn()
-			ledger.landOn(0);
+			players[currPlayer].playTurn();
 
 		}
 		System.out.println("Finised playing!");
+	}
+
+	// example implementation
+	public void move() {
+		// TODO: remove this random junk later.
+		dice.roll();
+		// check for doubles
+		// = if third doubles, jailed
+		// move to space
+		// = player space + dice
+		int randomSpace = new Random().nextInt(40) + 1; // 1-40
+		// process move
+		// 1. land on it
+		ledger.landOn(randomSpace);
+		// 2. draw card (if applicable)
+		// 2a. process card (more private functions)
+	}
+
+	// TODO: replace with actual player class
+	// example implementation
+	private class TempPlayer {
+		char strategy;
+		Monopoly game;
+
+		public TempPlayer(Monopoly refrence, char strat) {
+			this.game = refrence;
+			this.strategy = strat;
+		}
+
+		public void playTurn() {
+			this.game.move();
+		}
 	}
 }
