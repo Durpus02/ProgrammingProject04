@@ -15,8 +15,9 @@ public class Main {
 	}
 
 	// feel free to edit these
-	private static final String NAME_ENDER = "simTEST";
-	private static final int STARTING_N = 1;
+	private static final String NAME_ENDER = "simTEST"; // ex. stratA + <str> = stratA<str>.csv
+	private static final int STARTING_N = 10; // default 1,000
+	private static final int TESTS = 1; // default 4
 
 	/**
 	 * Creates data storage, runs 4 simulations for A, 4 for B, prints files, and
@@ -44,7 +45,7 @@ public class Main {
 		strat = 'A';
 		// run 4 tests of increasing magnitude of n
 		n_turns = STARTING_N;
-		for (int i = 1; i <= 4; ++i, n_turns *= 10) {
+		for (int i = 1; i <= TESTS; ++i, n_turns *= 10) {
 			ledger.swap(i); // swap what 'CD' to store
 			// setup and run game
 			Monopoly game = new Monopoly(ledger, numPlayers);
@@ -60,7 +61,7 @@ public class Main {
 		strat = 'B';
 		// run 4 tests of increasing magnitude of n
 		n_turns = STARTING_N;
-		for (int i = 1; i <= 4; ++i, n_turns *= 10) {
+		for (int i = 1; i <= TESTS; ++i, n_turns *= 10) {
 			ledger.swap(i); // swap what 'CD' to store
 			// setup and run game
 			Monopoly game = new Monopoly(ledger, numPlayers);
