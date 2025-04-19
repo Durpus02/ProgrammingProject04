@@ -1,8 +1,8 @@
 /**
- * 
+ *
  */
 /**
- * 
+ *
  */
-module Project4Group2 {
+module ProgrammingProject04 {
 }

@@ -1,11 +1,11 @@
-package monopoly.game;
+package data;
 
-import monopoly.model.Dice;
+import monopoly.Dice;
 
 public class Main {
 
 	/* * * * * * * * Test Client * * * * * * */
-	
+
 	public static void main(String[] args) {
 
 		Dice dice = new Dice();
@@ -16,6 +16,6 @@ public class Main {
 
 		if (dice.isDouble()) {
 		    System.out.println("You rolled a double!");
-		}        
+		}
     }
 }
