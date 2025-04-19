@@ -47,13 +47,11 @@ public class CommunityChest {
 
 		Card draw = cardsCC.remove(currentCard--);
 
-		if (draw.getName().contains("Get Out of Jail Free")) {
+		if (draw.getID() == 15) {
 			addToHandCC(draw);
-			return draw;
 		}
-		else {
-			return draw;
-		}
+		
+		return draw;
 	}
 	
 	public void discardPileCC(Card card){
