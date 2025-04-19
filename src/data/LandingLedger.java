@@ -5,11 +5,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-// Reused from Fall 24.
 /**
  * Used for storing the spaces landed on during the Monopoly simulations. Is
  * capable of storing 4 "CDs" (arrays) of data for each of the N scale tests.
  * The landOn method adds a tally to the given space landed on.
+ * 
+ * Reused from Fall 24. Lightly edited.
  *
  * @author Valor Goff
  */
@@ -37,6 +38,7 @@ public class LandingLedger {
 	 * arrays are all 0 for all spaces.
 	 */
 	public LandingLedger() {
+		// considers spaces [1-40], [0] is blank.
 		ledger_1 = new int[41];
 		ledger_2 = new int[41];
 		ledger_3 = new int[41];
@@ -137,6 +139,12 @@ public class LandingLedger {
 				sums[cd - 1] = 0;
 				for (int space : landings) {
 					sums[cd - 1] += space;
+				}
+				
+				// TODO: temporary
+				if(landings[0] != 0) {
+					System.out.println("== space[0] has data!! Subtracting data. ==");
+					sums[cd - 1] -= landings[0];
 				}
 			}
 

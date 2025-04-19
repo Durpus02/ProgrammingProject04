@@ -1,5 +1,7 @@
 package data;
 
+import monopoly.Monopoly;
+
 /**
  * Runs Project 4 for Group 2.
  * 
@@ -12,8 +14,9 @@ public class Main {
 		System.out.println("n: " + n);
 	}
 
-	private static final String NAME_ENDER = "simTEST"; // EDIT THIS
-	private static final int STARTING_N = 1000;
+	// feel free to edit these
+	private static final String NAME_ENDER = "simTEST";
+	private static final int STARTING_N = 1;
 
 	/**
 	 * Creates data storage, runs 4 simulations for A, 4 for B, prints files, and
@@ -31,28 +34,39 @@ public class Main {
 		// prep variables
 		LandingLedger ledger; // current ledger in use
 		char strat; // should be {'A','B'}
-		int n_moves;
+		int n_turns;
+		int numPlayers;
 
 		// = = = = Run Simulation A = = = =
 
 		ledger = ledgerA; // selecting which ledger to store in
+		numPlayers = 1;
 		strat = 'A';
 		// run 4 tests of increasing magnitude of n
-		n_moves = STARTING_N;
-		for (int i = 1; i <= 4; ++i, n_moves *= 10) { 
+		n_turns = STARTING_N;
+		for (int i = 1; i <= 4; ++i, n_turns *= 10) {
 			ledger.swap(i); // swap what 'CD' to store
-			play(n_moves);
+			// setup and run game
+			Monopoly game = new Monopoly(ledger, numPlayers);
+			game.addPlayer(strat);
+			game.setTurns(n_turns);
+			game.startGame();
 		}
 
 		// = = = = Run Simulation B = = = =
 
 		ledger = ledgerB; // selecting which ledger to store in
+		numPlayers = 1;
 		strat = 'B';
 		// run 4 tests of increasing magnitude of n
-		n_moves = STARTING_N;
-		for (int i = 1; i <= 4; ++i, n_moves *= 10) {
+		n_turns = STARTING_N;
+		for (int i = 1; i <= 4; ++i, n_turns *= 10) {
 			ledger.swap(i); // swap what 'CD' to store
-			play(n_moves);
+			// setup and run game
+			Monopoly game = new Monopoly(ledger, numPlayers);
+			game.addPlayer(strat);
+			game.setTurns(n_turns);
+			game.startGame();
 		}
 
 		// = = = = prints = = = = (for testing)
