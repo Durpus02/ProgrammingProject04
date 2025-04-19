@@ -14,7 +14,7 @@ import data.LandingLedger;
  * 
  * Defining "landing" as any space you move to after the instant start of your
  * turn. If you land on a chance card you also land anywhere it moves you. If
- * you land on go to jail you also land on jail. Failure to escape from jail is
+ * you get sent to jail you also land on jail. Failure to escape from jail is
  * not landing on jail again.
  * 
  * @author Valor Goff so far
