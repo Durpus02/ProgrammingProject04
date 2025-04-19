@@ -1,21 +1,81 @@
 package data;
 
-import monopoly.Dice;
-
+/**
+ * Runs Project 4 for Group 2.
+ * 
+ * @author Valor Goff
+ */
 public class Main {
 
-	/* * * * * * * * Test Client * * * * * * */
+	// TODO: TEMPORARY
+	private static void play(int n) {
+		System.out.println("n: " + n);
+	}
 
+	private static final String NAME_ENDER = "simTEST"; // EDIT THIS
+	private static final int STARTING_N = 1000;
+
+	/**
+	 * Creates data storage, runs 4 simulations for A, 4 for B, prints files, and
+	 * saves them to CSV.
+	 * 
+	 * Largely pulled over from my code, Fall24, Project4. Lightly edited to fit
+	 * this project.
+	 * 
+	 * @param args Unused this project.
+	 */
 	public static void main(String[] args) {
+		// prep data storage
+		LandingLedger ledgerA = new LandingLedger(); // for strategy A
+		LandingLedger ledgerB = new LandingLedger(); // for strategy B
+		// prep variables
+		LandingLedger ledger; // current ledger in use
+		char strat; // should be {'A','B'}
+		int n_moves;
 
-		Dice dice = new Dice();
-		dice.roll();
+		// = = = = Run Simulation A = = = =
 
-		System.out.println("Rolled: " + dice.getDie1() + " + " + dice.getDie2());
-		System.out.println("Total: " + dice.getTotal());
-
-		if (dice.isDouble()) {
-		    System.out.println("You rolled a double!");
+		ledger = ledgerA; // selecting which ledger to store in
+		strat = 'A';
+		// run 4 tests of increasing magnitude of n
+		n_moves = STARTING_N;
+		for (int i = 1; i <= 4; ++i, n_moves *= 10) { 
+			ledger.swap(i); // swap what 'CD' to store
+			play(n_moves);
 		}
-    }
+
+		// = = = = Run Simulation B = = = =
+
+		ledger = ledgerB; // selecting which ledger to store in
+		strat = 'B';
+		// run 4 tests of increasing magnitude of n
+		n_moves = STARTING_N;
+		for (int i = 1; i <= 4; ++i, n_moves *= 10) {
+			ledger.swap(i); // swap what 'CD' to store
+			play(n_moves);
+		}
+
+		// = = = = prints = = = = (for testing)
+
+		int sum = 0;
+		System.out.println("\nA stats:");
+		for (int i = 1; i <= 40; i++) {
+			System.out.println(i + ": " + ledgerA.get(i));
+			sum += ledgerA.get(i);
+		}
+		System.out.println("sum = " + sum);
+
+		sum = 0;
+		System.out.println("\nB stats:");
+		for (int i = 1; i <= 40; i++) {
+			System.out.println(i + ": " + ledgerB.get(i));
+			sum += ledgerB.get(i);
+		}
+		System.out.println("sum = " + sum);
+
+		// = = = = save data = = = =
+
+		ledgerA.createCSV("stratA" + NAME_ENDER);
+		ledgerB.createCSV("stratB" + NAME_ENDER);
+	}
 }

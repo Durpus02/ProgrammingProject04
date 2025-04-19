@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+// Reused from Fall 24.
 /**
  * Used for storing the spaces landed on during the Monopoly simulations. Is
  * capable of storing 4 "CDs" (arrays) of data for each of the N scale tests.
