@@ -9,6 +9,7 @@ import monopoly.Monopoly;
  */
 public class Main {
 
+	// hello
 	// TODO: TEMPORARY
 	private static void play(int n) {
 		System.out.println("n: " + n);
