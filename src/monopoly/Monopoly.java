@@ -153,6 +153,7 @@ public class Monopoly {
 
 			// TODO: Add playTurn()
 			players[currPlayer].playTurn();
+			// testing credentials change
 
 		}
 		System.out.println("Finised playing!");
