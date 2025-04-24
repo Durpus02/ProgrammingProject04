@@ -11,7 +11,7 @@ public class Main {
 
 	// feel free to edit these
 	private static final String NAME_ENDER = "simTEST"; // ex. stratA + <str> = stratA<str>.csv
-	private static final int STARTING_N = 10; // default 1,000
+	private static final int STARTING_N = 1000; // default 1,000
 	private static final int TESTS = 1; // default 4
 
 	/**
