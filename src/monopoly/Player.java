@@ -11,7 +11,7 @@ public class Player {
 
 	private boolean isJailed;
 	private List<Card> hand;
-	private int space; // Player's current board position (0–39)
+	private int space; // Player's current board position (0-39)
 
 	/**
 	 * Constructs a new player with default values. - Starts at position 0 (GO) -
@@ -67,7 +67,7 @@ public class Player {
 	/**
 	 * Sets the player's position on the board.
 	 *
-	 * @param space the board space index (0–39)
+	 * @param space the board space index (0-39)
 	 */
 	public void setSpace(int space) {
 		this.space = space;
@@ -76,7 +76,7 @@ public class Player {
 	/**
 	 * Gets the player's current board position.
 	 *
-	 * @return the board space index (0–39)
+	 * @return the board space index (0-39)
 	 */
 	public int getSpace() {
 		return this.space;

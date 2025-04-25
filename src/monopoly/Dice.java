@@ -38,7 +38,7 @@ public class Dice {
     /**
      * Returns the value of the first die.
      *
-     * @return value of die1 (1–6)
+     * @return value of die1 (1-6)
      */
     public int getDie1() {
         return die1;
@@ -47,7 +47,7 @@ public class Dice {
     /**
      * Returns the value of the second die.
      *
-     * @return value of die2 (1–6)
+     * @return value of die2 (1-6)
      */
     public int getDie2() {
         return die2;

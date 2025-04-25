@@ -9,7 +9,6 @@ public class ChanceCards {
 	// test commit
 	List<Card> cardsChance = new ArrayList<>();
 	List<Card> discardChance = new ArrayList<>();
-	List<Card> handChance = new ArrayList<>();
 	int currentCard;
 
 	ChanceCards() {
@@ -28,10 +27,10 @@ public class ChanceCards {
 		cardsChance.add(new Card("You have been elected Chairman - Collect $50/Player", 12));
 		cardsChance.add(new Card("Your building loan matures - Collect $50", 13));
 		cardsChance.add(new Card("Bank pays you dividend - Collect $50", 14));
-		cardsChance.add(new Card("Get Out of Jail Free – This card may be kept until needed", 15));
+		cardsChance.add(new Card("Get Out of Jail Free - This card may be kept until needed", 15));
 
 		currentCard = cardsChance.size() - 1;
-		shuffleChance();
+		Collections.shuffle(cardsChance);
 	}
 
 	public void shuffleChance() {
@@ -39,18 +38,13 @@ public class ChanceCards {
 	}
 
 	public Card drawChance() {
-		if (cardsChance.size() == 0) {
+		if (cardsChance.isEmpty()) {
 			cardsChance.addAll(discardChance);
 			shuffleChance();
 			discardChance.clear();
 		}
 
 		Card draw = cardsChance.remove(currentCard--);
-
-		if (draw.getID() == 15) {
-			addToHandChance(draw);
-		}
-
 		return draw;
 	}
 
@@ -58,19 +52,5 @@ public class ChanceCards {
 		if (card != null) {
 			discardChance.add(card);
 		}
-	}
-
-	public void addToHandChance(Card card) {
-		if (card != null) {
-			handChance.add(card);
-		}
-	}
-
-	public void removeFromHandChance(Card card) {
-		handChance.remove(card);
-	}
-
-	public List<Card> getHandChance() {
-		return new ArrayList<>(handChance);
 	}
 }

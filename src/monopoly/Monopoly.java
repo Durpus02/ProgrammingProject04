@@ -1,8 +1,9 @@
 package monopoly;
 
-import java.util.Random;
-
 import data.LandingLedger;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * The rule-book and game-master of the Monopoly simulation. The utility classes
@@ -27,6 +28,8 @@ public class Monopoly {
 	private Dice dice;
 	private ChanceCards chanceCards;
 	private CommunityChest communityChest;
+	private final List<Card> getOutOfJailChance;
+	private final List<Card> getOutOfJailCC;
 	// data
 	private LandingLedger ledger;
 	private TempPlayer[] players;
@@ -54,6 +57,8 @@ public class Monopoly {
 		dice = new Dice();
 		chanceCards = new ChanceCards();
 		communityChest = new CommunityChest();
+		this.getOutOfJailChance = new ArrayList<>();
+		this.getOutOfJailCC = new ArrayList<>();
 		// data
 		this.ledger = ledger;
 		if (numPlayers < 1) {
@@ -173,6 +178,7 @@ public class Monopoly {
 		ledger.landOn(randomSpace);
 		// 2. draw card (if applicable)
 		// 2a. process card (more private functions)
+		storeCard(randomSpace);
 	}
 
 	// TODO: replace with actual player class
@@ -188,6 +194,31 @@ public class Monopoly {
 
 		public void playTurn() {
 			this.game.move();
+		}
+	}
+
+	/**
+	 * Adds a card to the getOutOfJailCC or getOutOfJailChance fields if the player 
+	 * lands on a chance or community chest space, and the card ID is 15.
+	 * 
+	 * @param space The current space number the player is located
+	 */
+	private void storeCard(int space) {
+		Card card;
+		
+		switch (space) {
+			case 8, 24, 33:
+				card = communityChest.drawCC();
+				if (card.getID() == 15) {
+					getOutOfJailCC.add(card);
+				}
+				break;
+			case 13, 27, 38:
+				card = chanceCards.drawChance();
+				if (card.getID() == 15) {
+					getOutOfJailChance.add(card);
+				}
+				break;
 		}
 	}
 }
