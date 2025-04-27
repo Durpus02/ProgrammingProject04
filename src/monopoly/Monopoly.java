@@ -181,7 +181,7 @@ public class Monopoly {
 		dice.roll();
 		int roll = dice.getTotal();
 		if (p.jailStatus()) {
-			doublesCount = 0; // reset doubles count - players in jail should not have a doubles count. 
+			// doublesCount = 0; // reset doubles count - players in jail should not have a doubles count. 
 			jailHandling(p); // If player is able to get escape jail they can finish their turn.
 			if (p.jailStatus()) { // check if player was able to get out of jail 
 				return; // immediately ends players turn if they were not able to get out of jail.
@@ -242,6 +242,7 @@ public class Monopoly {
 	private void gotoJail(Player p) {
 		p.setJail(true);
 		p.setSpace(10); // Go to jail
+		ledger.landOn(p.getSpace());
 		doublesCount = 0; // reset doubles count
 	}
 
@@ -275,15 +276,21 @@ public class Monopoly {
 		}
 		// Strategy 'B' is to roll doubles to get out of jail
 		else if (p.getStrategy() == 'B') {
-			if (p.getAttemptsToRollOutOfJail() < 4) {
+			if (p.getAttemptsToRollOutOfJail() < 3) {
 				// check if the dice roll is a doubles
-				if (dice.getDie1() == dice.getDie2()) {
+				if (dice.isDouble()) {
 					p.setJail(false); // free the player
+					p.setAttemptsToRollOutOfJail(0);
 					return;
 				} else {
 					p.setAttemptsToRollOutOfJail(p.getAttemptsToRollOutOfJail() + 1);
 					return; // player is still in jail
 				}
+			} else if (p.getAttemptsToRollOutOfJail() >= 3){
+				// player has rolled 3 times and failed to roll doubles
+				p.setJail(false); // free the player assuming they finally paid the $50 fine
+				p.setAttemptsToRollOutOfJail(0);
+				return;
 			}
 		}
 	}
@@ -304,34 +311,44 @@ public class Monopoly {
 	private boolean getChance(Player p, Card c) {
 		switch (c.getID()) {
 			case 0: {
-				p.setSpace(10); // Go to jail
-				p.setJail(true);
+				ledger.landOn(p.getSpace());
+				gotoJail(p);
+				return true;
 			}
 			case 1:
+				ledger.landOn(p.getSpace());
 				p.setSpace(0); // Move to Go
 				return true;
 			case 2:
+				ledger.landOn(p.getSpace());
 				p.setSpace(24); // Move to Boardwalk
 				return true;
 			case 3:
+				ledger.landOn(p.getSpace());
 				p.setSpace(39); // Move to St. Charles Place
 				return true;
 			case 4:
+				ledger.landOn(p.getSpace());
 				p.setSpace(5); // Move to Illinois Ave
 				return true;
 			case 5:
+				ledger.landOn(p.getSpace());
 				p.setSpace(moveToNearestRR(p.getSpace())); // Move to Nearest RR
 				return true;
 			case 6:
+				ledger.landOn(p.getSpace());
 				p.setSpace(moveToNearestUtil(p.getSpace())); // Move to Nearest Utility
 				return true;
 			case 7:
+				ledger.landOn(p.getSpace());
 				p.setSpace(35); // Move Nearest RR
 				return true;
 			case 8:
+				ledger.landOn(p.getSpace());
 				p.setSpace(5); // Move to Reading RR
 				return true;
 			case 9:
+				ledger.landOn(p.getSpace());
 				p.setSpace((p.getSpace() - 3) % 40); // Move back 3 spaces (Chance locations should all be greater than
 														// 7)
 				return true;
@@ -363,8 +380,8 @@ public class Monopoly {
 	private boolean getCc(Player p, Card c) {
 		switch (c.getID()) {
 			case 0: {
-				p.setSpace(10); // Go to jail
-				p.setJail(true);
+				ledger.landOn(p.getSpace());
+				gotoJail(p);
 				return true;
 			}
 			case 1:
