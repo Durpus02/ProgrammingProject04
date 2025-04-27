@@ -48,10 +48,6 @@ public class CommunityChest {
 
 		Card draw = cardsCC.remove(currentCard--);
 
-		if (draw.getID() == 15) {
-			addToHandCC(draw);
-		}
-
 		return draw;
 	}
 

@@ -48,9 +48,6 @@ public class ChanceCards {
 
 		Card draw = cardsChance.remove(currentCard--);
 
-		if (draw.getID() == 15) {
-			addToHandChance(draw);
-		}
 
 		return draw;
 	}

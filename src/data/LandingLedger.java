@@ -144,12 +144,6 @@ public class LandingLedger {
 				for (int space : landings) {
 					sums[cd - 1] += space;
 				}
-				
-				// TODO: temporary
-				if(landings[0] != 0) {
-					System.out.println("== space[0] has data!! Subtracting data. ==");
-					sums[cd - 1] -= landings[0];
-				}
 			}
 
 			// write headers of file
