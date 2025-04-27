@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class ChanceCards {
-	// TODO
 	// test commit
 	List<Card> cardsChance = new ArrayList<>();
 	List<Card> discardChance = new ArrayList<>();

@@ -213,6 +213,7 @@ public class Monopoly {
 
 		// Check for landing on Go to jail
 		if (p.getSpace() == 30) { 
+			ledger.landOn(p.getSpace());
 			gotoJail(p);
 			return; // immediately end player's turn
 		}
@@ -223,7 +224,7 @@ public class Monopoly {
 
 		// This is line is used for player tracking for the assignment.
 		ledger.landOn(p.getSpace());
-		
+
 		// If player rolled doubles they get to roll again.
 		if (dice.isDouble()) {
 			playTurn(p);

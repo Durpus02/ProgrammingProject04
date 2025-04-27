@@ -5,12 +5,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class CommunityChest {
-	// TODO
 	// test commitment.
 	List<Card> cardsCC = new ArrayList<>();
 	List<Card> discardCC = new ArrayList<>();
 	
-	int currentCard;
+	//int currentCard;
 
 	public CommunityChest() {
 		cardsCC.add(new Card("Go to Jail – Go directly to jail. Do not pass Go. Do not collect $200", 0));
@@ -30,7 +29,7 @@ public class CommunityChest {
 		cardsCC.add(new Card("You inherit $100 - Collect $100", 14));
 		cardsCC.add(new Card("Get Out of Jail Free – This card may be kept until needed", 15));
 
-		currentCard = cardsCC.size() - 1;
+		//currentCard = cardsCC.size() - 1;
 		shuffleCC();
 	}
 
@@ -39,7 +38,7 @@ public class CommunityChest {
 	}
 
 	public Card drawCC() {
-		if (cardsCC.size() == 0) {
+		if (cardsCC.isEmpty()) {
 			cardsCC.addAll(discardCC);
 			//currentCard = cardsCC.size() - 1;
 			shuffleCC();
