@@ -11,30 +11,30 @@ public class Player {
 
 	private boolean isJailed;
 	private List<Card> hand;
+	private Card getoutOfJailCC;
+	private Card getoutOfJailChance;
 	private int space; // Player's current board position (0–39)
+	private final char strategy;
 
 	/**
 	 * Constructs a new player with default values. - Starts at position 0 (GO) -
 	 * Not in jail - Empty hand
 	 */
-	public Player() {
+	public Player(char strat) {
 		this.isJailed = false;
 		this.hand = new ArrayList<>();
 		this.space = 0;
+		this.strategy = strat;
 	}
 
 	/**
-	 * Puts the player in jail.
+	 * Puts the player in jail
+	 * or takes the player out of jail
+	 * Set true to jail the player
+	 * Set false to free the player
 	 */
-	public void setJailed() {
-		this.isJailed = true;
-	}
-
-	/**
-	 * Frees the player from jail.
-	 */
-	public void setFreed() {
-		this.isJailed = false;
+	public void setJail(boolean b) {
+		this.isJailed = b;
 	}
 
 	/**
@@ -42,26 +42,33 @@ public class Player {
 	 *
 	 * @return true if the player is jailed, false otherwise
 	 */
-	public boolean isJailed() {
+	public boolean jailStatus() {
 		return this.isJailed;
 	}
 
 	/**
-	 * Adds a card to the player's hand (e.g., a Get Out of Jail Free card).
-	 *
+	 * Adds a "Get Out of Jail Free" Community Chest card to the player's hand 
 	 * @param card the card to add
 	 */
-	public void addCard(Card card) {
-		this.hand.add(card);
+	public void addGOJCC(Card card) {
+		this.getoutOfJailCC = card;
 	}
 
 	/**
-	 * Returns a list of the cards currently held by the player.
-	 *
-	 * @return the player's hand as a List of Cards
+	 * Adds a "Get Out of Jail Free" Chance card to the player's hand
+	 * @param card the card to add
 	 */
-	public List<Card> getHand() {
-		return this.hand;
+	public void addGOJChance(Card card) {
+		this.getoutOfJailChance = card;
+	}
+
+	/**
+	 * Returns boolean indicating if the player has 
+	 * a Get Out of Jail Free card from  either 
+	 * Community Chest or Chance decks
+	 */
+	public boolean hasGetOutOfJailCard() {
+		return (getoutOfJailCC != null || getoutOfJailChance != null);
 	}
 
 	/**

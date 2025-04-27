@@ -16,7 +16,7 @@ public class Main {
 
 	// feel free to edit these
 	private static final String NAME_ENDER = "simTEST"; // ex. stratA + <str> = stratA<str>.csv
-	private static final int STARTING_N = 10; // default 1,000
+	private static final int STARTING_N = 50; // default 1,000
 	private static final int TESTS = 1; // default 4
 
 	/**
@@ -74,7 +74,7 @@ public class Main {
 
 		int sum = 0;
 		System.out.println("\nA stats:");
-		for (int i = 1; i <= 40; i++) {
+		for (int i = 0; i < 40; i++) {
 			System.out.println(i + ": " + ledgerA.get(i));
 			sum += ledgerA.get(i);
 		}
@@ -82,7 +82,7 @@ public class Main {
 
 		sum = 0;
 		System.out.println("\nB stats:");
-		for (int i = 1; i <= 40; i++) {
+		for (int i = 0; i < 40; i++) {
 			System.out.println(i + ": " + ledgerB.get(i));
 			sum += ledgerB.get(i);
 		}

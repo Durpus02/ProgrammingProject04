@@ -24,20 +24,25 @@ public class Monopoly {
 	private Dice dice;
 	private ChanceCards chanceCards;
 	private CommunityChest communityChest;
+	private int doublesCount = 0; // number of doubles rolled in a row
+	// private int jailRolls = 0; // number of turns in jail (3 max before you get
+	// out for free)
+
 	// data
 	private LandingLedger ledger;
-	private TempPlayer[] players;
+	private Player[] players;
+
 	private int turns;
 
 	// TODO: replace with actual player class
 	// Temporary
-	private class TempPlayer {
-		char strategy;
+	// private class TempPlayer {
+	// char strategy;
 
-		public TempPlayer(char strat) {
-			this.strategy = strat;
-		}
-	}
+	// public TempPlayer(char strat) {
+	// this.strategy = strat;
+	// }
+	// }
 
 	/**
 	 * Sets up the initial rules and tools of the game. Ledger implementation is
@@ -54,10 +59,11 @@ public class Monopoly {
 		// data
 		this.ledger = ledger;
 		if (numPlayers < 1) {
-			System.out.println("Can't have less than one player dummy! numPlayers = 1.");
+			System.out.println("Can't have less than one player! \n"
+					+ "Players will be set to 1");
 			numPlayers = 1;
 		}
-		this.players = new TempPlayer[numPlayers];
+		this.players = new Player[numPlayers];
 		turns = -1; // default
 	}
 
@@ -71,27 +77,27 @@ public class Monopoly {
 	 */
 	public void addPlayer(char strategy) {
 		switch (strategy) {
-		case 'A' -> {
-			int slot = nextSlot();
-			if (slot == -1) {
-				System.out.println("Players full! Didn't add player.");
-				return;
+			case 'A' -> {
+				int slot = nextSlot();
+				if (slot == -1) {
+					System.out.println("Players full! Didn't add player.");
+					return;
+				}
+				players[slot] = new Player(strategy);
+				System.out.println("A created");
 			}
-			players[slot] = new TempPlayer(strategy);
-			System.out.println("A created");
-		}
-		case 'B' -> {
-			int slot = nextSlot();
-			if (slot == -1) {
-				System.out.println("Players full! Didn't add player.");
-				return;
+			case 'B' -> {
+				int slot = nextSlot();
+				if (slot == -1) {
+					System.out.println("Players full! Didn't add player.");
+					return;
+				}
+				players[slot] = new Player(strategy);
+				System.out.println("B created");
 			}
-			players[slot] = new TempPlayer(strategy);
-			System.out.println("B created");
-		}
-		default -> {
-			System.out.println(strategy + " is not a valid strategy {'A','B'}, player not created.");
-		}
+			default -> {
+				System.out.println(strategy + " is not a valid strategy {'A','B'}, player not created.");
+			}
 		}
 	}
 
@@ -135,23 +141,182 @@ public class Monopoly {
 			System.out.println("Turns not set! Use setTurns(). Game not started.");
 			return;
 		}
-		for (TempPlayer player : players) {
+
+		for (Player player : players) {
 			if (player == null) {
 				System.out.println("Not all players are added! Use addPlayer. Game not started.");
 				return;
 			}
 		}
+		// for (TempPlayer player : players) {
+		// if (player == null) {
+		// System.out.println("Not all players are added! Use addPlayer. Game not
+		// started.");
+		// return;
+		// }
+		// }
 
+		/*
+		 * This is where it looks like the game is going to run in this loop.
+		 */
 		System.out.println("Starting game!");
 		// Unnecessarily complicated, but it *can* run multiple players
 		// runs 1-turns many times, incrementing through player order as it goes
 		for (int turn = 1, currPlayer = 0; turn <= turns; ++turn, currPlayer = ++currPlayer % players.length) {
+
 			System.out.println("Playing Turn " + turn + ", player " + (currPlayer + 1));
 
+			dice.roll();
+			int move = dice.getTotal();
+			// doubleRolls = (dice.getDie1() == dice.getDie2()) ? doubleRolls++ : 0;
+
+			// System.out.println("Rolled " + move + " " + dice.getDie1() + " " +
+			// dice.getDie2());
 			// TODO: Add playTurn()
-			ledger.landOn(0);
+			playTurn(players[currPlayer], move);
+			// ledger.landOn(players[currPlayer].getSpace());
 
 		}
-		System.out.println("Finised playing!");
+		System.out.println("Finised playing!\n");
 	}
+
+	/**
+	 * Method to execute the current player's turn.
+	 * This method will take the current Dice roll and move the player
+	 * accordingly. It will also check for any special conditions such as
+	 * landing on a Chance or Community Chest space, or going to jail.
+	 * 
+	 */
+	public void playTurn(Player p, int roll) {
+		// check for 3 doubles in a row.
+		doublesCount = (dice.getDie1() == dice.getDie2()) ? doublesCount + 1 : 0;
+		if (doublesCount == 3) {
+			p.setSpace(10); // Go to jail
+			p.setJail(true);
+			doublesCount = 0; // reset doubles count
+			System.out.println("Doubles rolled 3 times in a row! Go to jail!");
+		} else
+			p.setSpace((p.getSpace() + roll) % 40);
+
+		// Check for Community Chest
+		if (p.getSpace() == 2 || p.getSpace() == 17 || p.getSpace() == 33) {
+			Card cc = communityChest.drawCC();
+			if (getCc(p, cc))
+				communityChest.discardPileCC(cc);
+		}
+
+		// Check for Chance
+		if (p.getSpace() == 7 || p.getSpace() == 22 || p.getSpace() == 36) {
+			Card chance = chanceCards.drawChance();
+			if (getChance(p, chance))
+				chanceCards.discardPileChance(chance);
+		}
+
+		// This print line is just for feedback for testing.
+		System.out.println("Rolled " + roll + " " + dice.getDie1() + " " + dice.getDie2()
+				+ " " + ledger.getName(p.getSpace()) + " space: " + p.getSpace() + " doubles: " + doublesCount);
+
+		// This is line is used for player tracking for the assignment.
+		ledger.landOn(p.getSpace());
+
+	}
+
+	/**
+	 * Method to handle the actions associated with Chance cards.
+	 * This method is currently only used to check for the
+	 * "Go to Jail"
+	 * "Advance to Go"
+	 * "Get Out of Jail Free"
+	 * "Advance to Illinois Ave", "Advance to Boardwalk", "Advance to Reading
+	 * Railroad",
+	 * "Advance to St. Charles Place"
+	 * 
+	 * @param p The player who drew the card.
+	 * @param c The Chance card drawn.
+	 */
+	private boolean getChance(Player p, Card c) {
+		switch (c.getID()) {
+			case 0: {
+				p.setSpace(10); // Go to jail
+				p.setJail(true);
+			}
+			case 1:
+				p.setSpace(0); // Move to Go
+				return true;
+			case 2:
+				p.setSpace(24); // Move to Boardwalk
+				return true;
+			case 3:
+				p.setSpace(39); // Move to St. Charles Place
+				return true;
+			case 4:
+				p.setSpace(5); // Move to Illinois Ave
+				return true;
+			case 5:
+				p.setSpace(moveToNearestRR(p.getSpace())); // Move to Nearest RR
+				return true;
+			case 6:
+				p.setSpace(25); // Move to Nearest Utility
+				return true;
+			case 7:
+				p.setSpace(35); // Move Nearest RR
+				return true;
+			case 8:
+				p.setSpace(5); // Move to Reading RR
+				return true;
+			case 9:
+				p.setSpace((p.getSpace() - 3) % 40); // Move back 3 spaces (Chance locations should all be greater than 7)
+				return true;
+			case 15: {
+				p.addGOJChance(c); // Get Out of Jail Free
+				return false; // card is not returned to the discard pile
+			}
+			default:
+				return true; // return the card to the discard pile
+		}
+	}
+
+	/**
+	 * Method to handle the actions associated with Community Chest cards.
+	 * This method is currently only used to check for the
+	 * "Go to Jail"
+	 * "Advance to Go"
+	 * "Get Out of Jail Free".
+	 * 
+	 * Boolean return value is used to determine if the card should moved to
+	 * the discard pile after being evaluated.
+	 * "Get Out of Jail Free" card returns false, since it is assumed the player
+	 * will always keep it.
+	 * 
+	 * @param p The player who drew the card.
+	 * @param c The Community Chest card drawn.
+	 * @return boolean indicating if the card should go to the discard pile.
+	 */
+	private boolean getCc(Player p, Card c) {
+		switch (c.getID()) {
+			case 0: {
+				p.setSpace(10); // Go to jail
+				p.setJail(true);
+				return true;
+			}
+			case 1:
+				p.setSpace(0); // Move to Go
+				return true;
+			case 15: { // Get Out of Jail Free
+				p.addGOJCC(c);
+				return false;
+			}
+			default:
+				return true; // return the card to the discard pile
+		}
+	}
+
+	private int moveToNearestRR(int space) {
+		while (space%5 != 0) {
+			++space;
+		}
+		space = (space%10 == 0) ? space + 5 : space;
+		return space%40;
+	}
+
 }

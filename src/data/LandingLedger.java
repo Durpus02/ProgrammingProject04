@@ -39,11 +39,11 @@ public class LandingLedger {
 	 */
 	public LandingLedger() {
 		// considers spaces [1-40], [0] is blank.
-		ledger_1 = new int[41];
-		ledger_2 = new int[41];
-		ledger_3 = new int[41];
-		ledger_4 = new int[41];
-		for (int i = 0; i < 41; i++) {
+		ledger_1 = new int[40];
+		ledger_2 = new int[40];
+		ledger_3 = new int[40];
+		ledger_4 = new int[40];
+		for (int i = 0; i < 40; i++) {
 			ledger_1[i] = 0;
 			ledger_2[i] = 0;
 			ledger_3[i] = 0;
@@ -51,6 +51,10 @@ public class LandingLedger {
 		}
 
 		landings = ledger_1; // sets default operating "CD" to ledger_1
+	}
+
+	public String getName(int space) {
+		return SPACES[space];
 	}
 
 	/**
