@@ -39,7 +39,7 @@ public class ChanceCards {
 	}
 
 	public Card drawChance() {
-		if (cardsChance.size() == 0) {
+		if (cardsChance.isEmpty()) {
 			cardsChance.addAll(discardChance);
 			//currentCard = cardsChance.size() - 1;
 			shuffleChance();
