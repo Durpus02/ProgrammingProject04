@@ -9,7 +9,7 @@ public class CommunityChest {
 	// test commitment.
 	List<Card> cardsCC = new ArrayList<>();
 	List<Card> discardCC = new ArrayList<>();
-	List<Card> handCC = new ArrayList<>();
+	
 	int currentCard;
 
 	public CommunityChest() {
@@ -41,13 +41,11 @@ public class CommunityChest {
 	public Card drawCC() {
 		if (cardsCC.size() == 0) {
 			cardsCC.addAll(discardCC);
-			currentCard = cardsCC.size() - 1;
+			//currentCard = cardsCC.size() - 1;
 			shuffleCC();
 			discardCC.clear();
 		}
-
-		Card draw = cardsCC.remove(currentCard--);
-
+		Card draw = cardsCC.remove(0);
 		return draw;
 	}
 
@@ -55,19 +53,5 @@ public class CommunityChest {
 		if (card != null) {
 			discardCC.add(card);
 		}
-	}
-
-	public void addToHandCC(Card card) {
-		if (card != null) {
-			handCC.add(card);
-		}
-	}
-
-	public void removeFromHandCC(Card card) {
-		handCC.remove(card);
-	}
-
-	public List<Card> getHandCC() {
-		return new ArrayList<>(handCC);
 	}
 }

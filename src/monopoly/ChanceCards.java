@@ -9,8 +9,8 @@ public class ChanceCards {
 	// test commit
 	List<Card> cardsChance = new ArrayList<>();
 	List<Card> discardChance = new ArrayList<>();
-	List<Card> handChance = new ArrayList<>();
-	int currentCard;
+	
+	//int currentCard;
 
 	ChanceCards() {
 		cardsChance.add(new Card("Go to Jail. Go directly to jail. Do not pass Go. Do not collect $200", 0));
@@ -30,7 +30,7 @@ public class ChanceCards {
 		cardsChance.add(new Card("Bank pays you dividend - Collect $50", 14));
 		cardsChance.add(new Card("Get Out of Jail Free – This card may be kept until needed", 15));
 
-		currentCard = cardsChance.size() - 1;
+		//currentCard = cardsChance.size() - 1;
 		shuffleChance();
 	}
 
@@ -41,14 +41,11 @@ public class ChanceCards {
 	public Card drawChance() {
 		if (cardsChance.size() == 0) {
 			cardsChance.addAll(discardChance);
-			currentCard = cardsChance.size() - 1;
+			//currentCard = cardsChance.size() - 1;
 			shuffleChance();
 			discardChance.clear();
 		}
-
-		Card draw = cardsChance.remove(currentCard--);
-
-
+		Card draw = cardsChance.remove(0);
 		return draw;
 	}
 
@@ -58,17 +55,9 @@ public class ChanceCards {
 		}
 	}
 
-	public void addToHandChance(Card card) {
-		if (card != null) {
-			handChance.add(card);
-		}
-	}
 
-	public void removeFromHandChance(Card card) {
-		handChance.remove(card);
-	}
 
-	public List<Card> getHandChance() {
-		return new ArrayList<>(handChance);
-	}
+
+
+
 }
