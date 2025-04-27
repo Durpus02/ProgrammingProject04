@@ -207,13 +207,13 @@ public class Monopoly {
 		Card card;
 		
 		switch (space) {
-			case 8, 24, 33:
+			case 2, 17, 33:
 				card = communityChest.drawCC();
 				if (card.getID() == 15) {
 					getOutOfJailCC.add(card);
 				}
 				break;
-			case 13, 27, 38:
+			case 7, 22, 36:
 				card = chanceCards.drawChance();
 				if (card.getID() == 15) {
 					getOutOfJailChance.add(card);
