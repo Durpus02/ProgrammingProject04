@@ -41,6 +41,7 @@ public class ChanceCards {
 	public Card drawChance() {
 		if (cardsChance.size() == 0) {
 			cardsChance.addAll(discardChance);
+			currentCard = cardsChance.size() - 1;
 			shuffleChance();
 			discardChance.clear();
 		}

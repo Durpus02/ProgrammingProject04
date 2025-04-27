@@ -10,11 +10,12 @@ import java.util.List;
 public class Player {
 
 	private boolean isJailed;
-	private List<Card> hand;
+	// private List<Card> hand;
 	private Card getoutOfJailCC;
 	private Card getoutOfJailChance;
 	private int space; // Player's current board position (0–39)
 	private final char strategy;
+	private int attemptsToRollOutOfJail = 0;
 
 	/**
 	 * Constructs a new player with default values. - Starts at position 0 (GO) -
@@ -22,7 +23,7 @@ public class Player {
 	 */
 	public Player(char strat) {
 		this.isJailed = false;
-		this.hand = new ArrayList<>();
+		// this.hand = new ArrayList<>();
 		this.space = 0;
 		this.strategy = strat;
 	}
@@ -34,12 +35,12 @@ public class Player {
 	 * Set false to free the player
 	 */
 	public void setJail(boolean b) {
+		if (!b) attemptsToRollOutOfJail = 0;
 		this.isJailed = b;
 	}
 
 	/**
 	 * Checks if the player is currently in jail.
-	 *
 	 * @return true if the player is jailed, false otherwise
 	 */
 	public boolean jailStatus() {
@@ -47,7 +48,7 @@ public class Player {
 	}
 
 	/**
-	 * Adds a "Get Out of Jail Free" Community Chest card to the player's hand 
+	 * Adds a "Get Out of Jail Free" Community Chest card to the player's hand
 	 * @param card the card to add
 	 */
 	public void addGOJCC(Card card) {
@@ -63,12 +64,24 @@ public class Player {
 	}
 
 	/**
-	 * Returns boolean indicating if the player has 
-	 * a Get Out of Jail Free card from  either 
+	 * Returns boolean indicating if the player has
+	 * a Get Out of Jail Free card from either
 	 * Community Chest or Chance decks
 	 */
-	public boolean hasGetOutOfJailCard() {
-		return (getoutOfJailCC != null || getoutOfJailChance != null);
+	public boolean hasGOJFCC() {
+		return (getoutOfJailCC != null);
+	}
+
+	public boolean hasGOJFChance() {
+		return (getoutOfJailChance != null);
+	}
+
+	public Card useGOJFCC() {
+		return getoutOfJailCC;
+	}
+
+	public Card useGOJFChance() {
+		return getoutOfJailChance;
 	}
 
 	/**
@@ -87,5 +100,40 @@ public class Player {
 	 */
 	public int getSpace() {
 		return this.space;
+	}
+
+
+	// This is going to be space dedicated to player strategies for getting out of jail
+
+	/**
+	 * Getter for returning the player's strategy.
+	 * @return char representing the player's strategy
+	 */
+	public char getStrategy() {
+		return strategy;
+	}
+
+	/**
+	 * This gettier is used to determine the player's eligibility for attempting to
+	 * roll out of jail.
+	 * If the player is not jailed this field should be 0.
+	 * If the player is jailed they have the option to attempt to 
+	 * get out of jail for free by rolling doubles.
+	 * If they fail to roll doubles 3 times in a row, they must pay $50
+	 * and move to the space indicated by the dice roll.
+	 * @return
+	 */
+	public int getAttemptsToRollOutOfJail() {
+		return attemptsToRollOutOfJail;
+	}
+
+	/**
+	 * Sets the number of attempts the player has made to roll out of jail.
+	 * This is used to track how many times the player has rolled
+	 * while in jail.
+	 * @param attempts the number of attempts
+	 */
+	public void setAttemptsToRollOutOfJail(int attempts) {
+		this.attemptsToRollOutOfJail = attempts;
 	}
 }

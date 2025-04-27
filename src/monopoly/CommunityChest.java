@@ -41,6 +41,7 @@ public class CommunityChest {
 	public Card drawCC() {
 		if (cardsCC.size() == 0) {
 			cardsCC.addAll(discardCC);
+			currentCard = cardsCC.size() - 1;
 			shuffleCC();
 			discardCC.clear();
 		}

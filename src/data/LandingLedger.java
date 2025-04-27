@@ -90,7 +90,7 @@ public class LandingLedger {
 	 * @param space Which space to add a tally to in the array.
 	 */
 	public void landOn(int space) {
-		landings[space]++;
+		landings[space] += 1 ;
 	}
 
 	/**
@@ -159,10 +159,10 @@ public class LandingLedger {
 			// write body of file
 			StringBuilder line;
 			Double percentage;
-			for (int space = 1; space <= 40; space++) {
+			for (int space = 0; space < 40; space++) {
 				line = new StringBuilder();
 
-				line.append(SPACES[space - 1]); // space name
+				line.append(SPACES[space]); // space name
 				for (int cd = 1; cd <= 4; cd++) { // for each n ledger
 					swap(cd);
 					line.append(',');
