@@ -1,5 +1,7 @@
 package monopoly;
 
+import java.util.Random;
+
 import data.LandingLedger;
 
 /**
@@ -35,10 +37,20 @@ public class Monopoly {
 	 * Sets up the initial rules and tools of the game. Ledger implementation is
 	 * unique to the simulation project.
 	 * 
+	 * This is the public "constructor" using a factory design pattern so the
+	 * objects created can have its own pointer.
+	 * 
 	 * @param ledger     The LandingLedger that the game will write to.
 	 * @param numPlayers The number of players that will be playing.
 	 */
-	public Monopoly(LandingLedger ledger, int numPlayers) {
+	public static Monopoly create(LandingLedger ledger, int numPlayers) {
+		Monopoly game = new Monopoly(ledger, numPlayers);
+		game.instance = game;
+		return game;
+	}
+
+	// the actual constructor
+	private Monopoly(LandingLedger ledger, int numPlayers) {
 		// tools
 		dice = new Dice();
 		chanceCards = new ChanceCards();
@@ -399,5 +411,37 @@ public class Monopoly {
 			return 28;
 		return 12;
 
+	}
+
+	// example implementation
+	public void move() {
+		// TODO: remove this random junk later.
+		dice.roll();
+		// check for doubles
+		// = if third doubles, jailed
+		// move to space
+		// = player space + dice
+		int randomSpace = new Random().nextInt(40) + 1; // 1-40
+		// process move
+		// 1. land on it
+		ledger.landOn(randomSpace);
+		// 2. draw card (if applicable)
+		// 2a. process card (more private functions)
+	}
+
+	// TODO: replace with actual player class
+	// example implementation
+	private class TempPlayer {
+		char strategy;
+		Monopoly game;
+
+		public TempPlayer(Monopoly refrence, char strat) {
+			this.game = refrence;
+			this.strategy = strat;
+		}
+
+		public void playTurn() {
+			this.game.move();
+		}
 	}
 }
