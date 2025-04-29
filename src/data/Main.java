@@ -8,12 +8,7 @@ import monopoly.Monopoly;
  * @author Valor Goff
  */
 public class Main {
-
-	// TODO: TEMPORARY
-	private static void play(int n) {
-		System.out.println("n: " + n);
-	}
-
+	
 	// feel free to edit these
 	private static final String NAME_ENDER = "simTEST"; // ex. stratA + <str> = stratA<str>.csv
 	private static final int STARTING_N = 1000; // default 1,000

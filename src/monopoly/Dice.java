@@ -5,6 +5,8 @@ import java.util.Random;
 /**
  * Represents a pair of six-sided dice used in the Monopoly game.
  * Handles rolling, checking for doubles, and tracking consecutive doubles.
+ * 
+ * @author Alex
  */
 public class Dice {
 

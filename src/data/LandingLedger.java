@@ -10,7 +10,7 @@ import java.io.IOException;
  * capable of storing 4 "CDs" (arrays) of data for each of the N scale tests.
  * The landOn method adds a tally to the given space landed on.
  * 
- * Reused from Fall 24. Lightly edited.
+ * Reused from Fall 24. Lightly edited to fit new code-base.
  *
  * @author Valor Goff
  */
@@ -38,7 +38,7 @@ public class LandingLedger {
 	 * arrays are all 0 for all spaces.
 	 */
 	public LandingLedger() {
-		// considers spaces [1-40], [0] is blank.
+		// considers spaces [0-39]
 		ledger_1 = new int[40];
 		ledger_2 = new int[40];
 		ledger_3 = new int[40];
@@ -53,6 +53,12 @@ public class LandingLedger {
 		landings = ledger_1; // sets default operating "CD" to ledger_1
 	}
 
+	/**
+	 * Returns name of given Space.
+	 * 
+	 * @param space [0-39] (inclusive).
+	 * @return Name of space.
+	 */
 	public String getName(int space) {
 		return SPACES[space];
 	}
@@ -90,7 +96,7 @@ public class LandingLedger {
 	 * @param space Which space to add a tally to in the array.
 	 */
 	public void landOn(int space) {
-		landings[space] += 1 ;
+		landings[space] += 1;
 	}
 
 	/**
@@ -116,6 +122,7 @@ public class LandingLedger {
 		createFile(name);
 	}
 
+	// handles file creation
 	private void createFile(String name) {
 		String filename = "./output/" + name + ".csv";
 
@@ -133,10 +140,10 @@ public class LandingLedger {
 		}
 	}
 
+	// handles CSV writing
 	private void writeFile(String filename) {
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
-			// calculate total moves in each of the four ledgers (for percentage
-			// calculation)
+			// sum moves in each of the four ledgers (for percentage calculation)
 			int[] sums = new int[4];
 			for (int cd = 1; cd <= 4; ++cd) {
 				swap(cd);

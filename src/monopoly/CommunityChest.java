@@ -4,13 +4,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Deck for Community Chest. You can draw, discard, and shuffle the discard back
+ * into deck.
+ * 
+ * @author Corbin, Edwin
+ */
 public class CommunityChest {
-	// test commitment.
 	List<Card> cardsCC = new ArrayList<>();
 	List<Card> discardCC = new ArrayList<>();
-	
-	//int currentCard;
 
+	/**
+	 * Creates Community Chest and its cards.
+	 */
 	public CommunityChest() {
 		cardsCC.add(new Card("Go to Jail – Go directly to jail. Do not pass Go. Do not collect $200", 0));
 		cardsCC.add(new Card("Advance to Go", 1));
@@ -29,18 +35,26 @@ public class CommunityChest {
 		cardsCC.add(new Card("You inherit $100 - Collect $100", 14));
 		cardsCC.add(new Card("Get Out of Jail Free – This card may be kept until needed", 15));
 
-		//currentCard = cardsCC.size() - 1;
+		// currentCard = cardsCC.size() - 1;
 		shuffleCC();
 	}
 
+	/**
+	 * Shuffles the Community Chest.
+	 */
 	public void shuffleCC() {
 		Collections.shuffle(cardsCC);
 	}
 
+	/**
+	 * Draws card objects, "popping" it out.
+	 * 
+	 * @return Community Chest, Card Object.
+	 */
 	public Card drawCC() {
 		if (cardsCC.isEmpty()) {
 			cardsCC.addAll(discardCC);
-			//currentCard = cardsCC.size() - 1;
+			// currentCard = cardsCC.size() - 1;
 			shuffleCC();
 			discardCC.clear();
 		}
@@ -48,7 +62,15 @@ public class CommunityChest {
 		return draw;
 	}
 
+	/**
+	 * Takes and adds card to discard pile.
+	 * 
+	 * (!! Make sure you're discard the card to the right deck !!)
+	 * 
+	 * @param card Card Object to discard.
+	 */
 	public void discardPileCC(Card card) {
+		assert card != null : "Can't discard null to CC!!";
 		if (card != null) {
 			discardCC.add(card);
 		}

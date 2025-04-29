@@ -4,14 +4,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Deck of Chance cards. You can draw, discard, and shuffle the discard back
+ * into deck.
+ * 
+ * @author Corbin, Edwin
+ */
 public class ChanceCards {
-	// test commit
 	List<Card> cardsChance = new ArrayList<>();
 	List<Card> discardChance = new ArrayList<>();
-	
-	//int currentCard;
 
-	ChanceCards() {
+	/**
+	 * Creates Chance Deck and its cards.
+	 */
+	public ChanceCards() {
 		cardsChance.add(new Card("Go to Jail. Go directly to jail. Do not pass Go. Do not collect $200", 0));
 		cardsChance.add(new Card("Advance to Go", 1));
 		cardsChance.add(new Card("Advance to Boardwalk", 2));
@@ -29,18 +35,25 @@ public class ChanceCards {
 		cardsChance.add(new Card("Bank pays you dividend - Collect $50", 14));
 		cardsChance.add(new Card("Get Out of Jail Free – This card may be kept until needed", 15));
 
-		//currentCard = cardsChance.size() - 1;
 		shuffleChance();
 	}
 
+	/**
+	 * Shuffles the Chance Deck.
+	 */
 	public void shuffleChance() {
 		Collections.shuffle(cardsChance);
 	}
 
+	/**
+	 * Draws card objects, "popping" it out.
+	 * 
+	 * @return Chance Deck, Card Object.
+	 */
 	public Card drawChance() {
 		if (cardsChance.isEmpty()) {
 			cardsChance.addAll(discardChance);
-			//currentCard = cardsChance.size() - 1;
+			// currentCard = cardsChance.size() - 1;
 			shuffleChance();
 			discardChance.clear();
 		}
@@ -48,15 +61,18 @@ public class ChanceCards {
 		return draw;
 	}
 
+	/**
+	 * Takes and adds card to discard pile.
+	 * 
+	 * (!! Make sure you're discard the card to the right deck !!)
+	 * 
+	 * @param card Card Object to discard.
+	 */
 	public void discardPileChance(Card card) {
+		assert card != null : "Can't discard null to Chance deck!!";
 		if (card != null) {
 			discardChance.add(card);
 		}
 	}
-
-
-
-
-
 
 }
