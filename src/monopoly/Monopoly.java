@@ -155,8 +155,12 @@ public class Monopoly {
 	 * going to jail.
 	 * 
 	 * @param p
+	 * @throws IllegalArgumentException if the player is null
 	 */
 	public void playTurn(Player p) {
+		if (p==null){
+			throw new IllegalArgumentException("Player cannot be null");
+		}
 		dice.roll();
 		int roll = dice.getTotal();
 		if (p.jailStatus()) {
@@ -283,8 +287,12 @@ public class Monopoly {
 	 * 
 	 * @param p The player who drew the card.
 	 * @param c The Chance card drawn.
+	 * @throws IllegalArgumentException if player or card is null
 	 */
 	private boolean getChance(Player p, Card c) {
+		if (p == null || c == null) {
+			throw new IllegalArgumentException("Player or card cannot be null");
+		}
 		switch (c.getID()) {
 		case 0: {
 			ledger.landOn(p.getSpace());

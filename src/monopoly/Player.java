@@ -5,6 +5,7 @@ package monopoly;
  * position on the board, jail status, and held cards.
  * 
  * @author Alex, Edwin
+ * 
  */
 public class Player {
 
@@ -111,8 +112,12 @@ public class Player {
 	 * Sets the player's position on the board.
 	 *
 	 * @param space the board space index (0–39)
+	 * @throws IllegalArgumentException if space is outside of valid range
 	 */
 	public void setSpace(int space) {
+		if(space < 0 || space > 39){
+			throw new IllegalArgumentException("Space must be between 0 and 39.");
+		}
 		this.space = space;
 	}
 
@@ -155,8 +160,13 @@ public class Player {
 	 * used to track how many times the player has rolled while in jail.
 	 * 
 	 * @param attempts Sets the number of times Player has tried to roll out of jail
+	 * @throws IlllegalArgumentException if attempts is negative or greater than 3
 	 */
 	public void setAttemptsToRollOutOfJail(int attempts) {
+		if (attempts < 0 || attempts > 3){
+			throw new IllegalArgumentException("Jail attempts must be between 0 and 3");
+		}
 		this.attemptsToRollOutOfJail = attempts;
+	
 	}
 }

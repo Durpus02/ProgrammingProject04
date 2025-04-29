@@ -2,7 +2,7 @@ package monopoly;
 
 /**
  * Card object for Monopoly project. Stores a name and ID; has a toString.
- * 
+ * 	
  * @author Corbin
  */
 public class Card {
@@ -14,8 +14,15 @@ public class Card {
 	 * 
 	 * @param name Name of/on Card.
 	 * @param ID   Integer ID.
+	 * @throws IllegalArgumentException if name is null/empty or ID is negative
 	 */
 	Card(String name, int ID) {
+		if(name == null || name.isEmpty()) {
+			throw new IllegalArgumentException("Card name cannot be null or empty.");
+		}
+		if(ID < 0){
+			throw new IllegalArgumentException("Card ID cannot be nagative.");
+		}
 		this.NAME = name;
 		this.ID = ID;
 	}

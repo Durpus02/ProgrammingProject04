@@ -94,9 +94,13 @@ public class LandingLedger {
 	 * Adds a tally to the given space in the current operating array.
 	 *
 	 * @param space Which space to add a tally to in the array.
+	 * @throws IllegalArgumentException if space outside of range (0-39)
 	 */
 	public void landOn(int space) {
-		landings[space] += 1;
+		if(space < 0 || space > 39){
+			throw new IllegalArgumentException("Space must be between 0 and 39");
+		}
+		landings[space] += 1 ;
 	}
 
 	/**
@@ -122,7 +126,6 @@ public class LandingLedger {
 		createFile(name);
 	}
 
-	// handles file creation
 	private void createFile(String name) {
 		String filename = "./output/" + name + ".csv";
 
@@ -140,10 +143,10 @@ public class LandingLedger {
 		}
 	}
 
-	// handles CSV writing
 	private void writeFile(String filename) {
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
-			// sum moves in each of the four ledgers (for percentage calculation)
+			// calculate total moves in each of the four ledgers (for percentage
+			// calculation)
 			int[] sums = new int[4];
 			for (int cd = 1; cd <= 4; ++cd) {
 				swap(cd);
