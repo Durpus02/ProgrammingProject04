@@ -358,6 +358,7 @@ public class Monopoly {
 			return true;
 		}
 		case 1:
+			ledger.landOn(p.getSpace());
 			p.setSpace(0); // Move to Go
 			return true;
 		case 15: { // Get Out of Jail Free
